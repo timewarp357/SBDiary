@@ -10,6 +10,39 @@ table {
     width: 100%; /* 画面幅を100%に固定 */
 }
 
+td {
+    border-bottom: 2px solid #202020;
+    border-left: none;
+    border-right: none;
+    font-size: clamp(0.5em, 1vw, 1em);
+    padding: 3px;
+    text-align: left;
+}
+
+td > details[open] {
+background-color: #ccffff;
+display: block;
+}
+
+td > details[open]::before {
+content: "";
+position: absolute;
+inset: 0;
+z-index: -1;
+}
+
+td > details[open] > summary {
+background-color: #66ffff;
+}
+
+td > details > summary {
+cursor: pointer;
+}
+
+td:first-child { padding-left: 12px; }
+
+td:nth-child(n+5) { text-align: center; }
+
 th {
     background-color: #404040;
     border-bottom: 2px solid #202020;
@@ -23,35 +56,6 @@ th {
     white-space: nowrap;
 }
 
-td {
-    border-bottom: 2px solid #202020;
-    border-left: none;
-    border-right: none;
-    font-size: clamp(0.5em, 1vw, 1em);
-    padding: 3px;
-    text-align: left;
-}
-
-td > details[open] {
-    background-color: #ccffff;
-    display: block;
-}
-
-td > details[open]::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-}
-
-td > details[open] > summary {
-    background-color: #66ffff;
-}
-
-td > details > summary {
-    cursor: pointer;
-}
-
-.table-container {
-  overflow-x: auto;
+tr:nth-child(even of :not([none])) {
+    background-color: #d3d3d3;
 }
