@@ -2,163 +2,114 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ダンジョン検索</title>
-
-<style>
-  body {
-    font-family: sans-serif;
-    max-width: 1200px;
-    margin: 30px auto;
-    padding: 0 16px;
-  }
-
-  h1 {
-    margin-bottom: 20px;
-  }
-
-  #keyword {
-    width: 100%;
-    max-width: 400px;
-    box-sizing: border-box;
-    padding: 10px;
-    margin-bottom: 15px;
-    font-size: 16px;
-  }
-
-  #count {
-    margin-bottom: 10px;
-  }
-
-  .table-container {
-    overflow-x: auto;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-    white-space: nowrap;
-  }
-
-  th {
-    background-color: #f2f2f2;
-  }
-
-  tbody tr:hover {
-    background-color: #f9f9f9;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ダンジョン検索</title>
+  <script data-goatcounter="https://timewarp.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 
 <body>
 
-<h1>ダンジョン検索</h1>
+  <h1>ダンジョン検索</h1>
 
-<input
-  type="text"
-  id="keyword"
-  placeholder="キーワード検索"
->
+  <input
+    type="text"
+    id="keyword"
+    placeholder="キーワード検索"
+  >
 
-<p id="count">読み込み中...</p>
+  <p id="count">読み込み中...</p>
 
-<div class="table-container">
-  <table>
-    <thead>
-      <tr>
-        <th>ダンジョン</th>
-        <th>フロア</th>
-        <th>ボス</th>
-        <th>リーダー（配置）</th>
-        <th>Turn</th>
-        <th>Auto</th>
-      </tr>
-    </thead>
-    <tbody id="results"></tbody>
-  </table>
-</div>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ダンジョン</th>
+          <th>フロア</th>
+          <th>ボス</th>
+          <th>リーダー（配置）</th>
+          <th>Turn</th>
+          <th>Auto</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+  </div>
 
-<script>
-const JSON_URL = './data.json';
+  <script>
+  const JSON_URL = './data.json';
 
-let allData = [];
+  let allData = [];
 
-// 表示する列名
-const columnNames = [
-  'ダンジョン',
-  'フロア',
-  'ボス',
-  'リーダー（配置）',
-  'Turn',
-  'Auto'
-];
+  // 表示する列名
+  const columnNames = [
+    'ダンジョン',
+    'フロア',
+    'ボス',
+    'リーダー（配置）',
+    'Turn',
+    'Auto'
+  ];
 
-const keyword = document.getElementById('keyword');
-const results = document.getElementById('results');
-const count = document.getElementById('count');
+  const keyword = document.getElementById('keyword');
+  const results = document.getElementById('results');
+  const count = document.getElementById('count');
 
-// JSONデータを取得
-async function loadData() {
-  try {
-    const response = await fetch(JSON_URL, {
-      cache: 'no-store'
-    });
+  // JSONデータを取得
+  async function loadData() {
+    try {
+      const response = await fetch(JSON_URL, {
+        cache: 'no-store'
+      });
 
-    if (!response.ok) {
-      throw new Error('JSON取得エラー');
+      if (!response.ok) {
+        throw new Error('JSON取得エラー');
+      }
+
+      allData = await response.json();
+
+      render();
+
+    } catch (error) {
+      console.error(error);
+      count.textContent = 'データ取得に失敗しました';
     }
-
-    allData = await response.json();
-
-    render();
-
-  } catch (error) {
-    console.error(error);
-    count.textContent = 'データ取得に失敗しました';
   }
-}
 
-// 検索・テーブル表示
-function render() {
-  const q = keyword.value.trim().toLowerCase();
+  // 検索・テーブル表示
+  function render() {
+    const q = keyword.value.trim().toLowerCase();
 
-  const filtered = allData.filter(row => {
-    return Object.values(row).some(value =>
-      String(value).toLowerCase().includes(q)
-    );
-  });
-
-  count.textContent = `${filtered.length}件`;
-
-  results.replaceChildren();
-
-  filtered.forEach(row => {
-    const tr = document.createElement('tr');
-
-    // JSONの先頭6項目を表示
-    const values = Object.values(row).slice(0, 6);
-
-    values.forEach(value => {
-      const td = document.createElement('td');
-      td.textContent = value ?? '';
-      tr.appendChild(td);
+    const filtered = allData.filter(row => {
+      return Object.values(row).some(value =>
+        String(value).toLowerCase().includes(q)
+      );
     });
 
-    results.appendChild(tr);
-  });
-}
+    count.textContent = `${filtered.length}件`;
 
-keyword.addEventListener('input', render);
+    results.replaceChildren();
 
-loadData();
-</script>
+    filtered.forEach(row => {
+      const tr = document.createElement('tr');
+
+      // JSONの先頭6項目を表示
+      const values = Object.values(row).slice(0, 6);
+
+      values.forEach(value => {
+        const td = document.createElement('td');
+        td.textContent = value ?? '';
+        tr.appendChild(td);
+      });
+
+      results.appendChild(tr);
+    });
+  }
+
+  keyword.addEventListener('input', render);
+
+  loadData();
+  </script>
 
 </body>
 </html>
