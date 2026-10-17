@@ -93,8 +93,9 @@
     filtered.forEach(row => {
       const tr = document.createElement('tr');
 
-      // JSONの先頭6項目を表示
-      const values = Object.values(row).slice(0, 6);
+      // JSONの0、1、2、3、8、9、10番目を左から順に表示
+      const rowValues = Object.values(row);
+      const values = [0, 1, 2, 3, 8, 9, 10].map(index => rowValues[index]);
 
       values.forEach(value => {
         const td = document.createElement('td');
