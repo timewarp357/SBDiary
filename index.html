@@ -4,7 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ダンジョン検索</title>
+  <link rel="stylesheet" href="./style.css">
+  
+  <title>SB Diary</title>
+
   <script data-goatcounter="https://timewarp.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </head>
 
@@ -97,9 +100,25 @@
       const rowValues = Object.values(row);
       const values = [0, 1, 2, 3, 8, 9, 10].map(index => rowValues[index]);
 
-      values.forEach(value => {
+      values.forEach((value, index) => {
         const td = document.createElement('td');
-        td.textContent = value ?? '';
+
+        // 左から4番目（番号は0始まり）
+        if (index === 3) {
+          const details = document.createElement('details');
+          const summary = document.createElement('summary');
+          const content = document.createElement('div');
+
+          summary.textContent = '詳細を表示';
+          content.textContent = value ?? '';
+
+          details.appendChild(summary);
+          details.appendChild(content);
+          td.appendChild(details);
+        } else {
+          td.textContent = value ?? '';
+        }
+
         tr.appendChild(td);
       });
 
