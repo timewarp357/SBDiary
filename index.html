@@ -84,13 +84,19 @@
   function render() {
     const q = keyword.value.trim().toLowerCase();
 
-    const filtered = allData.filter(row => {
-      return Object.values(row).some(value =>
-        String(value).toLowerCase().includes(q)
-      );
-    });
+    const filtered = q === ''
+      // 初期状態・検索欄が空：末尾10件を表示
+      ? allData.slice(-10)
+      // キーワード入力時：全データから検索
+      : allData.filter(row =>
+          Object.values(row).some(value =>
+            String(value ?? '').toLowerCase().includes(q)
+          )
+        );
 
-    count.textContent = `${filtered.length}件`;
+    count.textContent = q === ''
+      ? `${filtered.length}件（最新の10件を表示）`
+      : `${filtered.length}件`;
 
     results.replaceChildren();
 
