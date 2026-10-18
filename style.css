@@ -62,7 +62,7 @@ tr:nth-child(even of :not([none])) {
 
 @media screen and (max-width: 1179px) {
     body {
-        font-size: 40px;
+        font-size: 28px;
     }
 
     h1 {
