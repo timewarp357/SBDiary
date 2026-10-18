@@ -60,6 +60,10 @@ tr:nth-child(even of :not([none])) {
     background-color: #d3d3d3;
 }
 
+#keyword {
+    font-size: 16px;
+}
+
 @media screen and (max-width: 1179px) {
     body {
         /* font-size: 28px; */
