@@ -56,6 +56,10 @@ th {
     white-space: nowrap;
 }
 
+tr:nth-child(odd of :not([none])) {
+    background-color: #ffffff;
+}
+
 tr:nth-child(even of :not([none])) {
     background-color: #d3d3d3;
 }
