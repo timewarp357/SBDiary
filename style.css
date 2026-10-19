@@ -18,6 +18,7 @@ main {
   padding: 1.5em 8px 8px;
 }
 
+/*
 .main-background {
 	background-size: 8px 8px;
 	background-repeat: repeat;
@@ -26,6 +27,7 @@ main {
 		#ffffff 0deg 90deg,
 		#dfdfdf 90deg 180deg);
 }
+*/
 
 table {
     border-collapse: collapse;

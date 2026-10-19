@@ -104,8 +104,8 @@
     const q = keyword.value.trim().toLowerCase();
 
     const filtered = q === ''
-      // 初期状態・検索欄が空：末尾10件を表示
-      ? allData.slice(-10)
+      // 初期状態・検索欄が空：末尾15件を表示
+      ? allData.slice(-15)
       // キーワード入力時：全データから検索
       : allData.filter(row =>
           Object.values(row).some(value =>
@@ -114,7 +114,7 @@
         );
 
     count.textContent = q === ''
-      ? `${filtered.length}件（最新の10件を表示）`
+      ? `${filtered.length}件（最新の15件を表示）`
       : `${filtered.length}件`;
 
     results.replaceChildren();
