@@ -71,8 +71,20 @@ tr:nth-child(even of :not([none])) {
   flex-wrap: wrap;
   gap: 0 24px;
   padding: 0 16px;
-  margin-bottom: 1.5em;
   border-bottom: 1px solid #ddd;
+}
+
+main {
+  padding: 1.5em 16px 16px;
+}
+
+.main-background {
+	background-size: 8px 8px;
+	background-repeat: repeat;
+	background-image:
+		repeating-conic-gradient(from 0deg,
+		#f4f6f7 0deg 90deg,
+		#d1d1d1 90deg 180deg);
 }
 
 .site-title {
