@@ -12,33 +12,47 @@
 </head>
 
 <body>
+  <header class="site-header">
+    <h3 class="site-title">
+      <a href="./index.html">SB Diary</a>
+    </h3>
 
-  <h1>ダンジョン検索</h1>
+    <nav class="site-nav" aria-label="メインナビゲーション">
+      <ul>
+        <li><a href="./index.html" aria-current="page">Top</a></li>
+        <li><a href="./about.html">About</a></li>
+        <li><a href="./contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <!-- <h3>ダンジョン検索</h3> -->
 
-  <input
-    type="text"
-    id="keyword"
-    placeholder="キーワード検索"
-  >
+    <input
+      type="text"
+      id="keyword"
+      placeholder="キーワード検索"
+    >
 
-  <p id="count">読み込み中...</p>
+    <p id="count">読み込み中...</p>
 
-  <div class="table-container">
-    <table>
-      <thead>
-        <tr>
-          <th>ダンジョン</th>
-          <th>フロア</th>
-          <th>ボス</th>
-          <th>リーダー（配置）</th>
-          <th>Turn</th>
-          <th>Auto</th>
-          <th>備考</th>
-        </tr>
-      </thead>
-      <tbody id="results"></tbody>
-    </table>
-  </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ダンジョン</th>
+            <th>フロア</th>
+            <th>ボス</th>
+            <th>リーダー（配置）</th>
+            <th>Turn</th>
+            <th>Auto</th>
+            <th>備考</th>
+          </tr>
+        </thead>
+        <tbody id="results"></tbody>
+      </table>
+    </div>
+  </main>
 
   <script>
   const JSON_URL = './data.json';

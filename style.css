@@ -64,6 +64,57 @@ tr:nth-child(even of :not([none])) {
     font-size: 16px;
 }
 
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.site-title {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.site-title a {
+  color: #222;
+  text-decoration: none;
+}
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 8px;
+  color: #333;
+  text-decoration: none;
+}
+
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+
+.site-header a:focus-visible {
+  outline: 2px solid #0066cc;
+  outline-offset: 3px;
+}
+
 @media screen and (max-width: 1179px) {
     body {
         /* font-size: 28px; */
@@ -134,4 +185,10 @@ tr:nth-child(even of :not([none])) {
         width: 100%;
         overflow-x: auto;
     }
+}
+
+@media screen and (max-width: 480px) {
+  .site-nav {
+    width: 100%;
+  }
 }
