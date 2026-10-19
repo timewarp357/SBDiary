@@ -159,17 +159,18 @@ tr:nth-child(even of :not([none])) {
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  margin-left: auto;
   min-width: 22px;
   min-height: 22px;
   padding: 0 16px;
   border-radius: 6px;
-  background-color: #404040;
-  color: #fff;
+  /* background-color: #404040; */
+  /* color: #fff; */
   text-decoration: none;
 }
 
 .back-to-top:hover {
-  background-color: #606060;
+  background-color: #b1b1b1;
 }
 
 .back-to-top:focus-visible {
@@ -178,9 +179,6 @@ tr:nth-child(even of :not([none])) {
 }
 
 @media screen and (max-width: 1179px) {
-    body {
-        /* font-size: 28px; */
-    }
 
     /*
     h1 {
