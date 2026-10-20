@@ -39,10 +39,14 @@
     </div>
 
     <div class="results-toolbar">
+      <label class="auto-filter">
+        <span>Autoフィルター</span>
+        <input type="checkbox" id="filter-auto" role="switch">
+        <span class="toggle-track" aria-hidden="true"></span>
+      </label>
       <div class="details-controls">
-        <button type="button" id="filter-auto" aria-pressed="false">Autoありのみ</button>
-        <button type="button" id="open-all">全て開く</button>
-        <button type="button" id="close-all">全て閉じる</button>
+        <button type="button" id="open-all">編成OPEN</button>
+        <button type="button" id="close-all">編成CLOSE</button>
       </div>
     </div>
 
@@ -181,9 +185,8 @@
 
   keyword.addEventListener('input', render);
 
-  filterAuto.addEventListener('click', () => {
-    autoOnly = !autoOnly;
-    filterAuto.setAttribute('aria-pressed', String(autoOnly));
+  filterAuto.addEventListener('change', () => {
+    autoOnly = filterAuto.checked;
     render();
   });
 
