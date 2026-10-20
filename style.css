@@ -54,6 +54,7 @@ main {
 .details-controls button {
   padding: 5px 10px;
   cursor: pointer;
+  width: 7em;
 }
 
 table {
