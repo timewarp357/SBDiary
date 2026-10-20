@@ -29,16 +29,18 @@
     
     <!-- <h3>ダンジョン検索</h3> -->
 
-    <input
-      type="text"
-      id="keyword"
-      placeholder="キーワード検索"
-    >
+    <div>
+      <input
+        type="text"
+        id="keyword"
+        placeholder="キーワード検索"
+      >
+      <span id="count">読み込み中...</span>
+    </div>
 
     <div class="results-toolbar">
-      <p id="count">読み込み中...</p>
-
       <div class="details-controls">
+        <button type="button" id="filter-auto" aria-pressed="false">Autoありのみ</button>
         <button type="button" id="open-all">全て開く</button>
         <button type="button" id="close-all">全て閉じる</button>
       </div>
@@ -71,6 +73,7 @@
   const JSON_URL = './data.json';
 
   let allData = [];
+  let autoOnly = false;
 
   // 表示する列名
   const columnNames = [
@@ -85,6 +88,7 @@
   const keyword = document.getElementById('keyword');
   const results = document.getElementById('results');
   const count = document.getElementById('count');
+  const filterAuto = document.getElementById('filter-auto');
 
   // JSONデータを取得
   async function loadData() {
@@ -111,19 +115,23 @@
   function render() {
     const q = keyword.value.trim().toLowerCase();
 
-    const filtered = q === ''
-      // 初期状態・検索欄が空：末尾15件を表示
-      ? allData.slice(-15)
-      // キーワード入力時：全データから検索
-      : allData.filter(row =>
-          Object.values(row).some(value =>
-            String(value ?? '').toLowerCase().includes(q)
-          )
-        );
+    const matched = allData.filter(row => {
+      const rowValues = Object.values(row);
+      // Auto列は表示時と同じくJSONの9番目（0始まり）を参照
+      const hasAuto = String(rowValues[9] ?? '').trim() !== '';
+      const matchesKeyword = q === '' || rowValues.some(value =>
+        String(value ?? '').toLowerCase().includes(q)
+      );
+      return (!autoOnly || hasAuto) && matchesKeyword;
+    });
+
+    // 検索欄が空の場合は、絞り込み後の末尾15件を表示
+    const filtered = q === '' ? matched.slice(-15) : matched;
 
     count.textContent = q === ''
       ? `${filtered.length}件（最新の15件を表示）`
       : `${filtered.length}件`;
+    if (autoOnly) count.textContent += '（Autoありのみ）';
 
     results.replaceChildren();
 
@@ -172,6 +180,12 @@
   }
 
   keyword.addEventListener('input', render);
+
+  filterAuto.addEventListener('click', () => {
+    autoOnly = !autoOnly;
+    filterAuto.setAttribute('aria-pressed', String(autoOnly));
+    render();
+  });
 
   document.getElementById('open-all').addEventListener('click', () => {
     results.querySelectorAll('details').forEach(details => {
