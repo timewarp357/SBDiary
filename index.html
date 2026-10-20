@@ -126,6 +126,12 @@
       // JSONの0、1、2、3、8、9、10番目を左から順に表示
       const rowValues = Object.values(row);
       const values = [0, 1, 2, 3, 8, 9, 10].map(index => rowValues[index]);
+      const positions = String(rowValues[7] ?? '').split('');
+      const formatMember = columnIndex => {
+        const member = rowValues[columnIndex] ?? '';
+        const position = positions[columnIndex - 3];
+        return position === undefined ? String(member) : `${member} (${position})`;
+      };
 
       values.forEach((value, index) => {
         const td = document.createElement('td');
@@ -136,11 +142,11 @@
           const summary = document.createElement('summary');
           const content = document.createElement('div');
 
-         summary.textContent = rowValues[3] ?? '';
+          summary.textContent = formatMember(3);
 
           [4, 5, 6].forEach(columnIndex => {
             const line = document.createElement('div');
-            line.textContent = rowValues[columnIndex] ?? '';
+            line.textContent = formatMember(columnIndex);
             content.appendChild(line);
           });
 
