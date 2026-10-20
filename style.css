@@ -151,6 +151,21 @@ tr:nth-child(even of :not([none])) {
   list-style: none;
 }
 
+.site-nav li {
+  position: relative;
+}
+
+.site-nav li + li::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 1em;
+  background-color: #999;
+}
+
 .site-nav a {
   display: inline-flex;
   align-items: center;
@@ -310,7 +325,33 @@ tr:nth-child(even of :not([none])) {
 }
 
 @media screen and (max-width: 480px) {
+  .site-header {
+    flex-wrap: nowrap;
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  .site-title {
+    font-size: clamp(1rem, 4vw, 1.125rem);
+    white-space: nowrap;
+  }
+
   .site-nav {
-    width: 100%;
+    flex: 0 0 auto;
+    font-size: clamp(0.75rem, 3vw, 0.875rem);
+  }
+
+  .site-nav ul {
+    flex-wrap: nowrap;
+    gap: 8px;
+  }
+
+  .site-nav li + li::before {
+    left: -4px;
+  }
+
+  .site-nav a {
+    padding: 0 4px;
+    white-space: nowrap;
   }
 }
