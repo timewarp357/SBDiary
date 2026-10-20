@@ -35,7 +35,14 @@
       placeholder="キーワード検索"
     >
 
-    <p id="count">読み込み中...</p>
+    <div class="results-toolbar">
+      <p id="count">読み込み中...</p>
+
+      <div class="details-controls">
+        <button type="button" id="open-all">全て開く</button>
+        <button type="button" id="close-all">全て閉じる</button>
+      </div>
+    </div>
 
     <div class="table-container">
       <table>
@@ -165,6 +172,18 @@
   }
 
   keyword.addEventListener('input', render);
+
+  document.getElementById('open-all').addEventListener('click', () => {
+    results.querySelectorAll('details').forEach(details => {
+      details.open = true;
+    });
+  });
+
+  document.getElementById('close-all').addEventListener('click', () => {
+    results.querySelectorAll('details').forEach(details => {
+      details.open = false;
+    });
+  });
 
   loadData();
   </script>

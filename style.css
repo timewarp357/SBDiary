@@ -33,6 +33,29 @@ main {
 }
 */
 
+.results-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.results-toolbar #count {
+  margin: 0;
+}
+
+.details-controls {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.details-controls button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
 table {
     border-collapse: collapse;
     max-width: 100%;
@@ -190,6 +213,32 @@ tr:nth-child(even of :not([none])) {
   outline: 2px solid #0066cc;
   outline-offset: 3px;
 }
+
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 26px);
+  gap: 4px;
+}
+
+.square {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
+}
+
+/* 右側の3個 */
+.square:nth-child(2n) {
+  border: 2px solid #a8a8a8;
+}
+
+/* 最下段の2個 */
+.square:nth-last-child(-n+2) {
+  border: 2px solid #a8a8a8;
+}
+
 
 @media screen and (max-width: 1179px) {
 
