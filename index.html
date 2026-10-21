@@ -140,7 +140,7 @@
 
     results.replaceChildren();
 
-    filtered.forEach(row => {
+    filtered.forEach((row, rowIndex) => {
       const tr = document.createElement('tr');
 
       // JSONの0、1、2、3、8、9、10番目を左から順に表示
@@ -174,10 +174,22 @@
           details.appendChild(content);
           td.appendChild(details);
         } else if (index === 6) {
-          // MISSIONは値がある場合に印を表示し、元の値は吹き出しにする
+          // MISSIONの元の値はHTMLとして解釈せず、吹き出し内に表示
           if (value !== null && value !== undefined) {
-            td.textContent = '詳細';
-            td.title = String(value);
+            const tooltip = document.createElement('span');
+            tooltip.className = 'tooltip';
+            tooltip.tabIndex = 0;
+            tooltip.textContent = '詳細';
+
+            const tooltipText = document.createElement('span');
+            tooltipText.className = 'tooltip-text';
+            tooltipText.id = `mission-tooltip-${rowIndex}`;
+            tooltipText.setAttribute('role', 'tooltip');
+            tooltipText.textContent = String(value);
+            tooltip.setAttribute('aria-describedby', tooltipText.id);
+
+            tooltip.appendChild(tooltipText);
+            td.appendChild(tooltip);
           }
         } else {
           td.textContent = value ?? '';
