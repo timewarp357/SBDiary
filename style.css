@@ -130,7 +130,15 @@ main {
 .tooltip {
   position: relative;
   display: inline-block;
-  cursor: help;
+}
+
+.tooltip-trigger {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
   text-decoration: underline dotted;
   text-underline-offset: 3px;
 }
@@ -158,12 +166,11 @@ main {
   box-shadow: 0 2px 8px #0003;
 }
 
-.tooltip:hover .tooltip-text,
-.tooltip:focus-within .tooltip-text {
+.tooltip-trigger[aria-expanded="true"] + .tooltip-text {
   display: block;
 }
 
-.tooltip:focus-visible {
+.tooltip-trigger:focus-visible {
   outline: 2px solid #0066cc;
   outline-offset: 3px;
 }
