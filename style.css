@@ -365,12 +365,14 @@ tr:nth-child(even of :not([none])) {
 
 /* 右側の3個 */
 .square:nth-child(2n) {
-  border: 2px solid #a8a8a8;
+  border: 2px solid #585858;
+  border-radius: 3px;
 }
 
 /* 最下段の2個 */
 .square:nth-last-child(-n+2) {
-  border: 2px solid #a8a8a8;
+  border: 2px solid #585858;
+  border-radius: 3px;
 }
 
 
