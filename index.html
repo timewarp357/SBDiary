@@ -135,7 +135,6 @@
     count.textContent = q === ''
       ? `${filtered.length}件（最新の15件を表示）`
       : `${filtered.length}件`;
-    if (autoOnly) count.textContent += '（Autoありのみ）';
 
     results.replaceChildren();
 
