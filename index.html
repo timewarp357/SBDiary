@@ -59,8 +59,8 @@
             <th>フロア</th>
             <th>ボス</th>
             <th>リーダー（配置）</th>
-            <th>Turn</th>
-            <th>Auto</th>
+            <th>TURN</th>
+            <th>AUTO</th>
             <th>MISSION</th>
           </tr>
         </thead>
@@ -86,8 +86,9 @@
     'フロア',
     'ボス',
     'リーダー（配置）',
-    'Turn',
-    'Auto'
+    'TURN',
+    'AUTO',
+    'MISSION'
   ];
 
   const keyword = document.getElementById('keyword');
@@ -172,6 +173,12 @@
           details.appendChild(summary);
           details.appendChild(content);
           td.appendChild(details);
+        } else if (index === 6) {
+          // MISSIONは値がある場合に印を表示し、元の値は吹き出しにする
+          if (value !== null && value !== undefined) {
+            td.textContent = '〇';
+            td.title = String(value);
+          }
         } else {
           td.textContent = value ?? '';
         }
