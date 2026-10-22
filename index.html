@@ -124,7 +124,7 @@
     const matched = allData.filter(row => {
       const rowValues = Object.values(row);
       // Auto列は表示時と同じくJSONの9番目（0始まり）を参照
-      const hasAuto = String(rowValues[9] ?? '').trim() !== '';
+      const hasAuto = String(rowValues[10] ?? '').trim() !== '';
       const matchesKeyword = q === '' || rowValues.some(value =>
         String(value ?? '').toLowerCase().includes(q)
       );
@@ -143,10 +143,10 @@
     filtered.forEach((row, rowIndex) => {
       const tr = document.createElement('tr');
 
-      // JSONの0、1、2、3、8、9、10番目を左から順に表示
+      // JSONの1、2、3、４、8、9、10番目を左から順に表示
       const rowValues = Object.values(row);
-      const values = [0, 1, 2, 3, 8, 9, 10].map(index => rowValues[index]);
-      const positions = String(rowValues[7] ?? '').split('');
+      const values = [2, 3, 4, 5, 9, 10, 11].map(index => rowValues[index]);
+      const positions = String(rowValues[6] ?? '').split('');
       const formatMember = columnIndex => {
         const member = rowValues[columnIndex] ?? '';
         const position = positions[columnIndex - 3];
@@ -157,14 +157,14 @@
         const td = document.createElement('td');
 
         // 左から4番目（番号は0始まり）
-        if (index === 3) {
+        if (index === 4) {
           const details = document.createElement('details');
           const summary = document.createElement('summary');
           const content = document.createElement('div');
 
-          summary.textContent = formatMember(3);
+          summary.textContent = formatMember(4);
 
-          [4, 5, 6].forEach(columnIndex => {
+          [5, 6, 7].forEach(columnIndex => {
             const line = document.createElement('div');
             line.textContent = formatMember(columnIndex);
             content.appendChild(line);
@@ -173,7 +173,7 @@
           details.appendChild(summary);
           details.appendChild(content);
           td.appendChild(details);
-        } else if (index === 6) {
+        } else if (index ===7) {
           // MISSIONの元の値はHTMLとして解釈せず、吹き出し内に表示
           if (value !== null && value !== undefined) {
             const tooltip = document.createElement('span');
@@ -182,7 +182,7 @@
             const tooltipButton = document.createElement('button');
             tooltipButton.type = 'button';
             tooltipButton.className = 'tooltip-trigger';
-            tooltipButton.textContent = '詳細';
+            tooltipButton.textContent = '詳細表示';
             tooltipButton.setAttribute('aria-expanded', 'false');
 
             const tooltipText = document.createElement('span');
