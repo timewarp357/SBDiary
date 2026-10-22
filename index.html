@@ -145,8 +145,8 @@
 
       // JSONの1、2、3、４、8、9、10番目を左から順に表示
       const rowValues = Object.values(row);
-      const values = [2, 3, 4, 5, 9, 10, 11].map(index => rowValues[index]);
-      const positions = String(rowValues[6] ?? '').split('');
+      const values = [1, 2, 3, 4, 9, 10, 11].map(index => rowValues[index]);
+      const positions = String(rowValues[8] ?? '').split('');
       const formatMember = columnIndex => {
         const member = rowValues[columnIndex] ?? '';
         const position = positions[columnIndex - 3];
@@ -162,7 +162,7 @@
           const summary = document.createElement('summary');
           const content = document.createElement('div');
 
-          summary.textContent = formatMember(3);
+          summary.textContent = formatMember(4);
 
           [5, 6, 7].forEach(columnIndex => {
             const line = document.createElement('div');
@@ -173,9 +173,10 @@
           details.appendChild(summary);
           details.appendChild(content);
           td.appendChild(details);
-        } else if (index ===7) {
+        } else if (index === 6) {
+          // JSONのインデックス11（Mis）は、テーブルでは7列目
           // MISSIONの元の値はHTMLとして解釈せず、吹き出し内に表示
-          if (value !== null && value !== undefined) {
+          if (String(value ?? '').trim() !== '') {
             const tooltip = document.createElement('span');
             tooltip.className = 'tooltip';
 
