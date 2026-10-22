@@ -157,12 +157,12 @@
         const td = document.createElement('td');
 
         // 左から4番目（番号は0始まり）
-        if (index === 4) {
+        if (index === 3) {
           const details = document.createElement('details');
           const summary = document.createElement('summary');
           const content = document.createElement('div');
 
-          summary.textContent = formatMember(4);
+          summary.textContent = formatMember(3);
 
           [5, 6, 7].forEach(columnIndex => {
             const line = document.createElement('div');
