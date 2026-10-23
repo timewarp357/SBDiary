@@ -265,7 +265,38 @@ table {
     box-sizing: border-box;
     max-width: 100%;
     min-width: 0;
-    min-height: 44px;
+    min-height: 1.4rem;
+}
+
+.statistics-dates {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-top: 16px;
+}
+
+.statistics-dates label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.statistics-dates input,
+.statistics-dates button {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-height: 36px;
+    font: inherit;
+}
+
+.statistics-dates input[aria-invalid="true"] {
+    outline: 2px solid #b00020;
+}
+
+#statistics-dates-help {
+    font-size: 0.8125rem;
+    line-height: 1.6;
 }
 
 .statistics-targets label {
