@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./style.css">
+
+  <title>SB Diary</title>
+
+</head>
+<body>
+  <header class="site-header" id="top" tabindex="-1">
+    <h3 class="site-title">
+      <a href="./index.html">SB Diary</a>
+    </h3>
+
+    <nav class="site-nav" aria-label="メインナビゲーション">
+      <ul>
+        <li><a href="./index.html">Top</a></li>
+        <li><a href="./about.html">概要</a></li>
+        <li><a href="./statistics.html" aria-current="page">統計</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="main-background">
+    <h3>統計</h3>
+    <p id="statistics-description">
+        リーダー・サブ1〜3の採用統計です。<br>
+        「編成数」列は1編成内で1回として集計した数です。複数体編成されていても1として数えます。<br>
+        「採用数」列は同名のモンスターを複数採用した場合、1体ごとに採用数を集計した結果です。<br>
+        「リーダー」列はリーダー枠の採用数、「サブ」列はサブ1〜3の採用数の合計です。
+    </p>
+    <p id="statistics-status" role="status">データを読み込み中...</p>
+    <p>
+      <label for="keyword">キャラクター名：</label>
+      <input type="search" id="keyword" placeholder="キャラクター名を入力" aria-controls="statistics-results" disabled>
+      <span id="filter-status" role="status"></span>
+    </p>
+    <div class="table-container">
+      <table class="statistics-table" aria-describedby="statistics-description">
+        <thead>
+          <tr>
+            <th scope="col">順位</th>
+            <th scope="col">キャラクター名</th>
+            <th scope="col">編成数</th>
+            <th scope="col">採用数</th>
+            <th scope="col">Leader</th>
+            <th scope="col">Sub</th>
+          </tr>
+        </thead>
+        <tbody id="statistics-results"></tbody>
+      </table>
+    </div>
+
+  </main>
+  <footer class="site-footer">
+    <small class="site-footer-title">SB Diary</small>
+    <a class="back-to-top" href="#top" aria-label="ページの先頭に戻る">↑ TOP</a>
+  </footer>
+  <script>
+    const memberColumns = ['リーダー', 'サブ1', 'サブ2', 'サブ3'];
+    const statisticsResults = document.getElementById('statistics-results');
+    const statisticsStatus = document.getElementById('statistics-status');
+    const keyword = document.getElementById('keyword');
+    const filterStatus = document.getElementById('filter-status');
+    const statisticsRows = [];
+
+    function filterCharacters() {
+      const query = keyword.value.trim().toLowerCase();
+      let visibleCount = 0;
+      for (const { row, name } of statisticsRows) {
+        row.hidden = !name.toLowerCase().includes(query);
+        if (!row.hidden) visibleCount++;
+      }
+      filterStatus.textContent = visibleCount
+        ? `${visibleCount.toLocaleString('ja-JP')}体を表示`
+        : '該当するキャラクターはありません。';
+    }
+
+    keyword.addEventListener('input', filterCharacters);
+
+    async function loadStatistics() {
+      try {
+        const response = await fetch('./data.json', { cache: 'no-store' });
+        if (!response.ok) {
+          throw new Error('JSON取得エラー');
+        }
+        const data = await response.json();
+        const counts = new Map();
+        const formationCounts = new Map();
+        const leaderCounts = new Map();
+        const subCounts = new Map();
+        let total = 0;
+
+        for (const row of data) {
+          const members = new Set();
+          for (const column of memberColumns) {
+            const name = String(row[column] ?? '').trim();
+            if (!name || name.startsWith('※')) continue;
+            counts.set(name, (counts.get(name) ?? 0) + 1);
+            const roleCounts = column === memberColumns[0] ? leaderCounts : subCounts;
+            roleCounts.set(name, (roleCounts.get(name) ?? 0) + 1);
+            members.add(name);
+            total++;
+          }
+          for (const name of members) {
+            formationCounts.set(name, (formationCounts.get(name) ?? 0) + 1);
+          }
+        }
+
+        const sorted = [...counts].sort((a, b) =>
+          b[1] - a[1] || a[0].localeCompare(b[0], 'ja')
+        );
+        const fragment = document.createDocumentFragment();
+        let rank = 0;
+        sorted.forEach(([name, count], index) => {
+          if (index === 0 || count !== sorted[index - 1][1]) rank = index + 1;
+          const tr = document.createElement('tr');
+          const values = [
+            rank,
+            name,
+            formationCounts.get(name).toLocaleString('ja-JP'),
+            count.toLocaleString('ja-JP'),
+            (leaderCounts.get(name) ?? 0).toLocaleString('ja-JP'),
+            (subCounts.get(name) ?? 0).toLocaleString('ja-JP')
+          ];
+          for (const value of values) {
+            const td = document.createElement('td');
+            td.textContent = value;
+            tr.appendChild(td);
+          }
+          fragment.appendChild(tr);
+          statisticsRows.push({ row: tr, name });
+        });
+        statisticsResults.replaceChildren(fragment);
+        keyword.disabled = false;
+        filterCharacters();
+        statisticsStatus.textContent = sorted.length
+          ? `${data.length.toLocaleString('ja-JP')}件の記録 / ${counts.size.toLocaleString('ja-JP')}種類 / 延べ${total.toLocaleString('ja-JP')}回（延べ採用数の多い順・同数は同順位）`
+          : '集計対象のデータがありません。';
+      } catch (error) {
+        console.error(error);
+        statisticsStatus.textContent = 'データの読み込みに失敗しました。時間をおいて再読み込みしてください。';
+      }
+    }
+
+    loadStatistics();
+  </script>
+</body>
+</html>
+

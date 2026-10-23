@@ -19,7 +19,7 @@ h1, h2, h3 {
 }
 
 main {
-  padding: 1.5em 8px 8px;
+  padding: 8px 8px;
 }
 
 /*
@@ -179,6 +179,42 @@ table {
     border-collapse: collapse;
     max-width: 100%;
     width: 100%; /* 画面幅を100%に固定 */
+}
+
+.statistics-table {
+    max-width: 60rem;
+    table-layout: fixed;
+    /* margin-inline: auto; */
+}
+
+.statistics-table th,
+.statistics-table td {
+    font-size: 0.875rem;
+    padding: 4px 16px;
+}
+
+.statistics-table th:first-child,
+.statistics-table th:nth-child(n+3) {
+    box-sizing: border-box;
+    width: 6rem;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.statistics-table td:first-child,
+.statistics-table td:nth-child(n+3) {
+    box-sizing: border-box;
+    width: 6rem;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.statistics-table th[scope="col"] {
+    white-space: normal;
+}
+
+.statistics-table td:nth-child(2) {
+    overflow-wrap: anywhere;
 }
 
 td {
@@ -388,27 +424,13 @@ tr:nth-child(even of :not([none])) {
         width: auto;
     }
 
-    /*
-    h1 {
-        font-size: 1.4em;
-    }
-
-    h2 {
-        font-size: 1.2em;
-    }
-
-    h3 {
-        font-size: 1.0em;
-    }
-    */
-
-    table {
+    table.index-table {
         font-size: 1.2em;
         table-layout: fixed;
         width: 100%;
     }
 
-    td {
+    td.index-table {
         display: flex;
         flex-wrap: nowrap;
         font-size: 0.7em;
@@ -423,7 +445,7 @@ tr:nth-child(even of :not([none])) {
         white-space: nowrap;
     }
 
-    td:first-child {
+    td.index-table:first-child {
         background-color: #606060;
         color: white;
         font-size: 0.8em;
@@ -431,20 +453,20 @@ tr:nth-child(even of :not([none])) {
         text-align: left;
     }
 
-    td:nth-child(even) {
+    td.index-table:nth-child(even) {
         background-color: #f3f3f3;
     }
 
-    th{
+    th.index-table{
         font-size: 0.9em;
     }
 
-    thead {
+    thead.index-table {
         display: none;
         font-size: 0.8em;
     }
 
-    tr {
+    tr.index-table {
         width: 100%;
         margin-bottom: 10px;
     }
