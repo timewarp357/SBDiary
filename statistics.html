@@ -28,7 +28,8 @@
         リーダー・サブ1〜3の採用統計です。<br>
         「編成/通算」列は「編成数（延べ採用数）」の形式で表示します。<br>
         編成数は同じ編成内の同名を1回、延べ採用数は採用した1体ごとに数えます。<br>
-        「L/Sub」列は選択した集計対象の「リーダー採用数/サブ1〜3の延べ採用数」を表示します。
+        「L/Sub」列は選択した集計対象の「リーダー採用数/サブ1〜3の延べ採用数」を表示します。<br>
+        「AUTO」をONにすると、Auto欄に値がある記録だけを集計します。
     </p>
     <p id="statistics-status" role="status">データを読み込み中...</p>
     <p>
@@ -40,6 +41,7 @@
       <span id="statistics-targets-label">集計対象</span>
       <label><input type="checkbox" id="include-leader" aria-controls="statistics-results" checked disabled>リーダー</label>
       <label><input type="checkbox" id="include-sub" aria-controls="statistics-results" checked disabled>サブ</label>
+      <label><input type="checkbox" id="auto-only" aria-controls="statistics-results" disabled>AUTOのみ</label>
     </div>
     <div class="table-container">
       <table class="statistics-table" aria-describedby="statistics-description">
@@ -69,6 +71,7 @@
     const statisticsRows = [];
     const includeLeader = document.getElementById('include-leader');
     const includeSub = document.getElementById('include-sub');
+    const autoOnly = document.getElementById('auto-only');
     let allData = [];
 
     function filterCharacters() {
@@ -86,6 +89,7 @@
     keyword.addEventListener('input', filterCharacters);
     includeLeader.addEventListener('change', renderStatistics);
     includeSub.addEventListener('change', renderStatistics);
+    autoOnly.addEventListener('change', renderStatistics);
 
     async function loadStatistics() {
       try {
@@ -98,6 +102,7 @@
         keyword.disabled = false;
         includeLeader.disabled = false;
         includeSub.disabled = false;
+        autoOnly.disabled = false;
       } catch (error) {
         console.error(error);
         statisticsStatus.textContent = 'データの読み込みに失敗しました。時間をおいて再読み込みしてください。';
@@ -105,6 +110,9 @@
     }
 
     function renderStatistics() {
+      const data = autoOnly.checked
+        ? allData.filter(row => String(row.Auto ?? '').trim() !== '')
+        : allData;
       const columns = [
         ...(includeLeader.checked ? memberColumns.slice(0, 1) : []),
         ...(includeSub.checked ? memberColumns.slice(1) : [])
@@ -116,7 +124,7 @@
       const subCounts = new Map();
       let total = 0;
 
-      for (const row of allData) {
+      for (const row of data) {
         const members = new Set();
         for (const column of columns) {
           const name = String(row[column] ?? '').trim();
@@ -163,7 +171,7 @@
       }
       const targetLabel = [includeLeader.checked ? 'リーダー' : '', includeSub.checked ? 'サブ' : ''].filter(Boolean).join('・');
       statisticsStatus.textContent = sorted.length
-        ? `${targetLabel} / ${allData.length.toLocaleString('ja-JP')}件の記録 / ${counts.size.toLocaleString('ja-JP')}種類 / 延べ${total.toLocaleString('ja-JP')}回（延べ採用数の多い順・同数は同順位）`
+        ? `${autoOnly.checked ? 'AUTO / ' : ''}${targetLabel} / ${data.length.toLocaleString('ja-JP')}件の記録 / ${counts.size.toLocaleString('ja-JP')}種類 / 延べ${total.toLocaleString('ja-JP')}回（延べ採用数の多い順・同数は同順位）`
         : '集計対象のデータがありません。';
     }
 
