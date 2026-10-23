@@ -22,17 +22,21 @@
       </ul>
     </nav>
   </header>
-  <main class="main-background">
+  <main class="main-background statistics-page">
     <h3>統計</h3>
     <p id="statistics-description">
-        リーダー・サブ1〜3の採用統計です。<br>
-        「編成/通算」列は「編成数（延べ採用数）」の形式で表示します。<br>
-        編成数は同じ編成内の同名を1回、延べ採用数は採用した1体ごとに数えます。<br>
-        「L/Sub」列は選択した集計対象の「リーダー採用数/サブ1〜3の延べ採用数」を表示します。<br>
-        「AUTO」をONにすると、Auto欄に値がある記録だけを集計します。
+        キャラクター毎の使用回数の統計です。<br>
+        <details>
+            <summary>各列とチェックボックスの解説</summary>
+                「編/全」列は「編成に採用された回数 / 延べ採用数」を表示します。<br>
+                延べ採用数は、複数体採用した場合に採用したキャラクターの数を集計した結果です。<br>
+                <br>
+                「L/S」列は「リーダー採用数 / サブ1〜3の延べ採用数」を表示します。<br>
+                <br>
+                「AUTOのみ」をONにすると、Auto欄に値がある編成だけを集計します。
+        </details>
     </p>
-    <p id="statistics-status" role="status">データを読み込み中...</p>
-    <p>
+    <p class="statistics-search">
       <label for="keyword">キャラクター名：</label>
       <input type="search" id="keyword" placeholder="キャラクター名を入力" aria-controls="statistics-results" disabled>
       <span id="filter-status" role="status"></span>
@@ -43,14 +47,17 @@
       <label><input type="checkbox" id="include-sub" aria-controls="statistics-results" checked disabled>サブ</label>
       <label><input type="checkbox" id="auto-only" aria-controls="statistics-results" disabled>AUTOのみ</label>
     </div>
-    <div class="table-container">
+
+    <p id="statistics-status" role="status">データを読み込み中...</p>
+
+    <div class="table-container statistics-table-container" role="region" aria-label="キャラクター採用統計表" tabindex="0">
       <table class="statistics-table" aria-describedby="statistics-description">
         <thead>
           <tr>
             <th scope="col">順位</th>
             <th scope="col">キャラクター名</th>
-            <th scope="col">編成/通算</th>
-            <th scope="col">L/Sub</th>
+            <th scope="col">編/全</th>
+            <th scope="col">L/S</th>
           </tr>
         </thead>
         <tbody id="statistics-results"></tbody>
@@ -151,8 +158,8 @@
         const values = [
           rank,
           name,
-          `${formationCounts.get(name).toLocaleString('ja-JP')}（${count.toLocaleString('ja-JP')}）`,
-          `${(leaderCounts.get(name) ?? 0).toLocaleString('ja-JP')}/${(subCounts.get(name) ?? 0).toLocaleString('ja-JP')}`
+          `${formationCounts.get(name).toLocaleString('ja-JP')} / ${count.toLocaleString('ja-JP')}`,
+          `${(leaderCounts.get(name) ?? 0).toLocaleString('ja-JP')} / ${(subCounts.get(name) ?? 0).toLocaleString('ja-JP')}`
         ];
         for (const value of values) {
           const td = document.createElement('td');

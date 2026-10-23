@@ -19,6 +19,7 @@ h1, h2, h3 {
 }
 
 main {
+  align-items: center;
   padding: 8px 8px;
 }
 
@@ -170,6 +171,10 @@ table {
     width: 100%; /* 画面幅を100%に固定 */
 }
 
+.statistics-page {
+    font-size: 0.875rem;
+}
+
 .statistics-table {
     max-width: 60rem;
     table-layout: fixed;
@@ -192,7 +197,7 @@ table {
 
 .statistics-table th,
 .statistics-table td {
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     padding: 4px 16px;
 }
 
@@ -208,7 +213,7 @@ table {
 }
 
 .statistics-table th:nth-child(n+3) {
-  width: 8rem;
+  width: 6.5rem;
 }
 
 .statistics-table td:first-child,
@@ -223,7 +228,12 @@ table {
 }
 
 .statistics-table td:nth-child(n+3) {
-  width: 8rem;
+  width: 6.5rem;
+}
+
+.statistics-table th:nth-child(n+3),
+.statistics-table td:nth-child(n+3) {
+    padding-inline: 8px;
 }
 
 .statistics-table th[scope="col"] {
@@ -232,6 +242,86 @@ table {
 
 .statistics-table td:nth-child(2) {
     overflow-wrap: anywhere;
+}
+
+.statistics-table-container {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.statistics-table-container:focus-visible {
+    outline: 2px solid #0066cc;
+    outline-offset: 2px;
+}
+
+.statistics-search {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.statistics-search #keyword {
+    box-sizing: border-box;
+    max-width: 100%;
+    min-width: 0;
+    min-height: 44px;
+}
+
+.statistics-targets label {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    gap: 4px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+    .statistics-page {
+        font-size: 0.8125rem;
+    }
+
+    .statistics-table {
+        min-width: 18rem;
+    }
+
+    .statistics-table th,
+    .statistics-table td {
+        font-size: 0.75rem;
+        line-height: 1.5;
+        padding: 8px 4px;
+    }
+
+    .statistics-table th:nth-child(n+3),
+    .statistics-table td:nth-child(n+3) {
+        padding-inline: 4px;
+    }
+
+    .statistics-table th:first-child,
+    .statistics-table td:first-child {
+        width: 2.5rem;
+    }
+
+    .statistics-table th:nth-child(n+3),
+    .statistics-table td:nth-child(n+3) {
+        width: 4.5rem;
+    }
+
+    .statistics-search #keyword {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    .statistics-targets {
+        gap: 4px 12px;
+    }
+
+    .statistics-page #statistics-description,
+    .statistics-page #statistics-status {
+        font-size: 0.8125rem;
+        line-height: 1.6;
+        overflow-wrap: anywhere;
+    }
 }
 
 td {
