@@ -424,57 +424,6 @@ tr:nth-child(even of :not([none])) {
         width: auto;
     }
 
-    table.index-table {
-        font-size: 1.2em;
-        table-layout: fixed;
-        width: 100%;
-    }
-
-    td.index-table {
-        display: flex;
-        flex-wrap: nowrap;
-        font-size: 0.7em;
-        justify-content: space-between;
-        text-align: left;
-    }
-
-    td:before {
-        content: attr(data-label);
-        flex: 1;
-        font-weight: bold;
-        white-space: nowrap;
-    }
-
-    td.index-table:first-child {
-        background-color: #606060;
-        color: white;
-        font-size: 0.8em;
-        font-weight: bold;
-        text-align: left;
-    }
-
-    td.index-table:nth-child(even) {
-        background-color: #f3f3f3;
-    }
-
-    th.index-table{
-        font-size: 0.9em;
-    }
-
-    thead.index-table {
-        display: none;
-        font-size: 0.8em;
-    }
-
-    tr.index-table {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-
-    .table-container {
-        width: 100%;
-        overflow-x: auto;
-    }
 }
 
 @media screen and (max-width: 480px) {
