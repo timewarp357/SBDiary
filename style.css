@@ -22,20 +22,9 @@ main {
   padding: 8px 8px;
 }
 
-/*
-.main-background {
-	background-size: 8px 8px;
-	background-repeat: repeat;
-	background-image:
-		repeating-conic-gradient(from 0deg,
-		#ffffff 0deg 90deg,
-		#dfdfdf 90deg 180deg);
-}
-*/
 #keyword {
   padding: 4px 6px;
 }
-
 
 #count {
   font-size: 0.75rem;
@@ -187,6 +176,20 @@ table {
     /* margin-inline: auto; */
 }
 
+.statistics-targets {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-block: 16px;
+}
+
+.statistics-targets label {
+    white-space: nowrap;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 .statistics-table th,
 .statistics-table td {
     font-size: 0.875rem;
@@ -196,17 +199,31 @@ table {
 .statistics-table th:first-child,
 .statistics-table th:nth-child(n+3) {
     box-sizing: border-box;
-    width: 6rem;
     text-align: center;
     white-space: nowrap;
+  }
+  
+.statistics-table th:first-child {
+  width: 4rem;
+}
+
+.statistics-table th:nth-child(n+3) {
+  width: 8rem;
 }
 
 .statistics-table td:first-child,
 .statistics-table td:nth-child(n+3) {
-    box-sizing: border-box;
-    width: 6rem;
-    text-align: right;
-    white-space: nowrap;
+  box-sizing: border-box;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.statistics-table td:first-child {
+  width: 4rem;
+}
+
+.statistics-table td:nth-child(n+3) {
+  width: 8rem;
 }
 
 .statistics-table th[scope="col"] {
