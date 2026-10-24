@@ -97,7 +97,7 @@
     'ダンジョン',
     'フロア',
     'ボス',
-    'リーダー（配置）',
+    'モンスター（配置）',
     'TURN',
     'AUTO',
     'MISSION'
@@ -163,7 +163,7 @@
       const positions = String(rowValues[8] ?? '').split('');
       const formatMember = columnIndex => {
         const member = rowValues[columnIndex] ?? '';
-        const position = positions[columnIndex - 3];
+        const position = positions[columnIndex - 4];
         return position === undefined ? String(member) : `${member} (${position})`;
       };
 
