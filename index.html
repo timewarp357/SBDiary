@@ -41,11 +41,18 @@
     </div>
 
     <div class="results-toolbar">
+      <div class="results-filters">
       <label class="auto-filter">
-        <span>AUTOのみ表示</span>
+        <span>AUTOのみ</span>
         <input type="checkbox" id="filter-auto" role="switch">
         <span class="toggle-track" aria-hidden="true"></span>
       </label>
+      <label class="auto-filter">
+        <span>日課のみ</span>
+        <input type="checkbox" id="filter-daily" role="switch">
+        <span class="toggle-track" aria-hidden="true"></span>
+      </label>
+      </div>
       <div class="details-controls" role="group" aria-labelledby="details-label">
         <span id="details-label">編成</span>
         <button type="button" id="open-all">OPEN</button>
@@ -83,6 +90,7 @@
 
   let allData = [];
   let autoOnly = false;
+  let dailyOnly = false;
 
   // 表示する列名
   const columnNames = [
@@ -99,6 +107,7 @@
   const results = document.getElementById('results');
   const count = document.getElementById('count');
   const filterAuto = document.getElementById('filter-auto');
+  const filterDaily = document.getElementById('filter-daily');
 
   // JSONデータを取得
   async function loadData() {
@@ -129,10 +138,11 @@
       const rowValues = Object.values(row);
       // Auto列は表示時と同じくJSONの9番目（0始まり）を参照
       const hasAuto = String(rowValues[10] ?? '').trim() !== '';
+      const isDaily = String(row['日課'] ?? '').trim() === '〇';
       const matchesKeyword = q === '' || rowValues.some(value =>
         String(value ?? '').toLowerCase().includes(q)
       );
-      return (!autoOnly || hasAuto) && matchesKeyword;
+      return (!autoOnly || hasAuto) && (!dailyOnly || isDaily) && matchesKeyword;
     });
 
     // 検索欄が空の場合は、絞り込み後の末尾15件を表示
@@ -245,6 +255,11 @@
 
   filterAuto.addEventListener('change', () => {
     autoOnly = filterAuto.checked;
+    render();
+  });
+
+  filterDaily.addEventListener('change', () => {
+    dailyOnly = filterDaily.checked;
     render();
   });
 
